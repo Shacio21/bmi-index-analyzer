@@ -28,10 +28,11 @@ export default function ResultCard({ result, onReset }: Props) {
     <div className="card result-card">
       {/* Score header */}
       <div className="result-header" style={{ "--accent": result.color } as React.CSSProperties}>
-        <div className="score-badge" style={{ borderColor: result.color }}>
-          <span className="score-icon" style={{ color: result.color }}>
-            {SEVERITY_ICONS[result.severity]}
-          </span>
+        <div
+          className="score-badge"
+          style={{ borderColor: result.color, color: result.color } as React.CSSProperties}
+        >
+          <span className="score-icon">{SEVERITY_ICONS[result.severity]}</span>
           <span className="score-number" style={{ color: result.color }}>
             {result.index}
           </span>
@@ -41,12 +42,15 @@ export default function ResultCard({ result, onReset }: Props) {
           <h2 className="result-label" style={{ color: result.color }}>
             {result.label}
           </h2>
-          <p className="result-bmi">BMI: <strong>{result.bmi}</strong></p>
+          <p className="result-bmi">
+            BMI Score: <strong>{result.bmi}</strong>
+          </p>
         </div>
       </div>
 
       {/* Index scale */}
       <div className="scale-section">
+        <p className="scale-heading">BMI Classification Scale</p>
         <div className="scale-track">
           {INDEX_LABELS.map(({ index, short }) => (
             <div
@@ -55,7 +59,11 @@ export default function ResultCard({ result, onReset }: Props) {
             >
               <div
                 className="scale-dot"
-                style={result.index === index ? { background: result.color, borderColor: result.color } : {}}
+                style={
+                  result.index === index
+                    ? { background: result.color, borderColor: result.color }
+                    : {}
+                }
               />
               <span className="scale-label">{short}</span>
             </div>
@@ -69,21 +77,44 @@ export default function ResultCard({ result, onReset }: Props) {
         </div>
       </div>
 
-      {/* Description */}
+      {/* Stats chips */}
       <div className="result-body">
+        <div className="stats-row">
+          <div className="stat-chip">
+            <span className="stat-chip-label">BMI Value</span>
+            <span className="stat-chip-value" style={{ color: result.color }}>
+              {result.bmi}
+            </span>
+            <span className="stat-chip-unit">kg/m²</span>
+          </div>
+          <div className="stat-chip">
+            <span className="stat-chip-label">Index</span>
+            <span className="stat-chip-value" style={{ color: result.color }}>
+              {result.index}
+              <span style={{ fontSize: 14, color: 'var(--text-muted)', fontWeight: 400 }}>/5</span>
+            </span>
+            <span className="stat-chip-unit">{result.label}</span>
+          </div>
+        </div>
+
+        {/* Description */}
         <div className="result-section">
           <h3 className="section-heading">What this means</h3>
           <p className="section-text">{result.description}</p>
         </div>
 
-        <div className="result-section advice-box" style={{ borderLeftColor: result.color }}>
+        {/* Advice */}
+        <div
+          className="result-section advice-box"
+          style={{ borderLeftColor: result.color }}
+        >
           <h3 className="section-heading">Recommendation</h3>
           <p className="section-text">{result.advice}</p>
         </div>
       </div>
 
       <button className="reset-btn" onClick={onReset}>
-        ← Check Again
+        <span>←</span> Check Again
       </button>
     </div>
   );

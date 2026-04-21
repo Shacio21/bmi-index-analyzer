@@ -50,7 +50,10 @@ export default function App() {
       </div>
 
       <header className="header">
-        <div className="logo-mark">BMI</div>
+        <div className="logo-mark">
+          <span className="logo-dot" />
+          BMI Analyzer
+        </div>
         <h1 className="site-title">Body Index Analyzer</h1>
         <p className="site-sub">Powered by Machine Learning</p>
       </header>
@@ -64,7 +67,7 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <p>For informational purposes only — not a substitute for medical advice.</p>
+        <p>For informational purposes only — not a substitute for professional medical advice.</p>
       </footer>
     </div>
   );

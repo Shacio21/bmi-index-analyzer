@@ -1,4 +1,5 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
+import type { SubmitEvent } from "react";
 
 interface Props {
   onSubmit: (data: { gender: string; height: number; weight: number }) => void;
@@ -18,7 +19,7 @@ export default function BMIForm({ onSubmit, loading, error }: Props) {
   const weightErr = touched.weight && (isNaN(weightNum) || weightNum < 10 || weightNum > 500);
   const canSubmit = !isNaN(heightNum) && !isNaN(weightNum) && heightNum >= 50 && weightNum >= 10;
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!canSubmit) return;
     onSubmit({ gender, height: heightNum, weight: weightNum });
@@ -27,14 +28,17 @@ export default function BMIForm({ onSubmit, loading, error }: Props) {
   return (
     <div className="card form-card">
       <div className="card-header">
-        <h2>Check Your Body Index</h2>
-        <p>Enter your details below to get an instant analysis</p>
+        <div className="card-header-icon">⚡</div>
+        <div className="card-header-text">
+          <h2>Body Index Analysis</h2>
+          <p>Enter your details for an instant AI-powered assessment</p>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="form">
         {/* Gender */}
         <div className="field">
-          <label className="field-label">Gender</label>
+          <label className="field-label">Biological sex</label>
           <div className="gender-toggle">
             <button
               type="button"
@@ -58,44 +62,59 @@ export default function BMIForm({ onSubmit, loading, error }: Props) {
         {/* Height */}
         <div className="field">
           <label className="field-label" htmlFor="height">
-            Height <span className="field-unit">cm</span>
+            Height
           </label>
-          <input
-            id="height"
-            type="number"
-            className={`field-input ${heightErr ? "input-error" : ""}`}
-            placeholder="e.g. 170"
-            value={height}
-            min={50}
-            max={300}
-            onChange={(e) => setHeight(e.target.value)}
-            onBlur={() => setTouched((t) => ({ ...t, height: true }))}
-          />
-          {heightErr && <span className="field-error">Enter a valid height (50–300 cm)</span>}
+          <div className="input-wrapper">
+            <input
+              id="height"
+              type="number"
+              className={`field-input ${heightErr ? "input-error" : ""}`}
+              placeholder="170"
+              value={height}
+              min={50}
+              max={300}
+              onChange={(e) => setHeight(e.target.value)}
+              onBlur={() => setTouched((t) => ({ ...t, height: true }))}
+            />
+            <span className="input-suffix">cm</span>
+          </div>
+          {heightErr && (
+            <span className="field-error">
+              <span>⚠</span> Valid range: 50–300 cm
+            </span>
+          )}
         </div>
 
         {/* Weight */}
         <div className="field">
           <label className="field-label" htmlFor="weight">
-            Weight <span className="field-unit">kg</span>
+            Weight
           </label>
-          <input
-            id="weight"
-            type="number"
-            className={`field-input ${weightErr ? "input-error" : ""}`}
-            placeholder="e.g. 65"
-            value={weight}
-            min={10}
-            max={500}
-            onChange={(e) => setWeight(e.target.value)}
-            onBlur={() => setTouched((t) => ({ ...t, weight: true }))}
-          />
-          {weightErr && <span className="field-error">Enter a valid weight (10–500 kg)</span>}
+          <div className="input-wrapper">
+            <input
+              id="weight"
+              type="number"
+              className={`field-input ${weightErr ? "input-error" : ""}`}
+              placeholder="65"
+              value={weight}
+              min={10}
+              max={500}
+              onChange={(e) => setWeight(e.target.value)}
+              onBlur={() => setTouched((t) => ({ ...t, weight: true }))}
+            />
+            <span className="input-suffix">kg</span>
+          </div>
+          {weightErr && (
+            <span className="field-error">
+              <span>⚠</span> Valid range: 10–500 kg
+            </span>
+          )}
         </div>
 
         {error && (
           <div className="api-error">
-            <span>⚠</span> {error}
+            <span>⚠</span>
+            <span>{error}</span>
           </div>
         )}
 
@@ -107,10 +126,13 @@ export default function BMIForm({ onSubmit, loading, error }: Props) {
           {loading ? (
             <>
               <span className="spinner" />
-              Analyzing...
+              Analyzing your data…
             </>
           ) : (
-            "Analyze My Body Index →"
+            <>
+              Analyze My Body Index
+              <span style={{ opacity: 0.7 }}>→</span>
+            </>
           )}
         </button>
       </form>
