@@ -10,11 +10,11 @@ A full-stack BMI classification app powered by a Gradient Boosting ML model. Use
 
 ---
 
-## Screenshot
+## preview
 
-> _Add a screenshot or screen recording of the app here._
-<img width="1264" height="1079" alt="Screenshot 2026-04-21 141636" src="https://github.com/user-attachments/assets/72f9655c-7814-4d80-ba8e-c9a29dbac95d" />
-<img width="1127" height="1079" alt="Screenshot 2026-04-21 141756" src="https://github.com/user-attachments/assets/54b14506-4fba-4ffc-b70d-cb12ebc97d01" />
+> preview
+<img width="1064" height="979" alt="Screenshot 2026-04-21 141636" src="https://github.com/user-attachments/assets/72f9655c-7814-4d80-ba8e-c9a29dbac95d" />
+<img width="937" height="979" alt="Screenshot 2026-04-21 141756" src="https://github.com/user-attachments/assets/54b14506-4fba-4ffc-b70d-cb12ebc97d01" />
 
 
 ---
